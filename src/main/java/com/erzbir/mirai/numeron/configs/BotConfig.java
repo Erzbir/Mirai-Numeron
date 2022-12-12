@@ -5,7 +5,6 @@ import com.erzbir.mirai.numeron.configs.entity.GroupList;
 import com.erzbir.mirai.numeron.configs.entity.IllegalList;
 import com.erzbir.mirai.numeron.configs.entity.WhiteList;
 import com.erzbir.mirai.numeron.utils.MiraiLogUtil;
-import lombok.extern.slf4j.Slf4j;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
@@ -25,13 +24,11 @@ import java.util.Scanner;
  * @author Erzbir
  * @Date: 2022/11/16 21:14
  * <p>
- * 配置类
+ * 配置类, 机器人的配置
  * </p>
  */
 @Configuration
-@Slf4j
 @ComponentScan(basePackages = "com.erzbir.mirai.numeron")
-//@PropertySource (value = "classpath:application.properties", encoding = "utf-8")
 public class BotConfig {
     private static final String botName = "Numeron";
     private static final String OS = System.getProperty("os.name");
@@ -121,9 +118,7 @@ public class BotConfig {
         Properties properties;
         File file = new File(configDir);
         if (!file.exists()) {
-            if (!file.mkdir()) {
-                return;
-            }
+            file.mkdir();
         }
         try {
             outputStream = new FileOutputStream(configDir + configName);
@@ -177,9 +172,7 @@ public class BotConfig {
         WORKDIR = botDir + account;
         File file = new File(WORKDIR);
         if (!file.exists()) {
-            if (file.mkdirs()) {
-                return bot;
-            }
+            file.mkdirs();
         }
         bot = BotFactory.INSTANCE.newBot(account, password, new BotConfiguration() {
             {
