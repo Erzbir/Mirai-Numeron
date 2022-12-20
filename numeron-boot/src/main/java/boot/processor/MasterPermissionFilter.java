@@ -1,0 +1,22 @@
+package boot.processor;
+
+import boot.configs.BotConfig;
+import com.erzbir.mirai.numeron.filter.permission.AbstractPermissionFilter;
+import net.mamoe.mirai.event.events.MessageEvent;
+
+/**
+ * @author Erzbir
+ * @Date: 2022/11/26 16:03
+ * 实体权限过滤类
+ */
+public class MasterPermissionFilter extends AbstractPermissionFilter {
+    public static final MasterPermissionFilter INSTANCE = new MasterPermissionFilter();
+
+    private MasterPermissionFilter() {
+    }
+
+    @Override
+    public Boolean filter(MessageEvent event, String text) {
+        return BotConfig.INSTANCE.isMaster(event.getSender().getId());
+    }
+}
