@@ -1,7 +1,7 @@
 package com.erzbir.mirai.numeron.listener;
 
 
-import com.erzbir.mirai.numeron.handler.Component;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

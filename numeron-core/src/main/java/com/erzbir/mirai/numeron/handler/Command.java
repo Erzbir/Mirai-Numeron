@@ -10,7 +10,6 @@ import java.lang.annotation.Target;
  * @author Erzbir
  * @Date: 2022/12/1 20:32
  */
-@Component
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE, ElementType.METHOD})
 public @interface Command {
