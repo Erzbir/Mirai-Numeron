@@ -1,9 +1,7 @@
 package com.erzbir.mirai.numeron.entity;
 
 
-
 import com.erzbir.mirai.numeron.utils.SqlUtil;
-import lombok.Getter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +15,7 @@ import java.util.HashSet;
  * 开启机器人的群
  * </p>
  */
-@Getter
+
 public class GroupList {
     public final static GroupList INSTANCE = new GroupList();
     private final HashSet<Long> group = new HashSet<>();
@@ -103,6 +101,10 @@ public class GroupList {
             return "授权中";
         }
         return "没有授权";
+    }
+
+    public HashSet<Long> getGroup() {
+        return group;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package com.erzbir.mirai.numeron.job;
 
+import com.erzbir.mirai.numeron.job.inter.IContactJob;
 import com.erzbir.mirai.numeron.job.inter.IMessageJob;
 import com.erzbir.mirai.numeron.job.inter.TimeTask;
-import lombok.Getter;
-import lombok.Setter;
 import net.mamoe.mirai.contact.Contact;
 import net.mamoe.mirai.message.data.MessageChain;
 
@@ -11,9 +10,7 @@ import net.mamoe.mirai.message.data.MessageChain;
  * @author Erzbir
  * @Date: 2022/12/2 12:09
  */
-@Getter
-@Setter
-public class MessageTimeJob extends TimeTask implements IMessageJob {
+public class MessageTimeJob extends TimeTask implements IMessageJob, IContactJob {
     private Contact[] contacts;
     private MessageChain messages;
 
@@ -62,6 +59,18 @@ public class MessageTimeJob extends TimeTask implements IMessageJob {
     @Override
     public void setCron(String cron) {
         this.cron = cron;
+    }
+
+    public void setContacts(Contact[] contacts) {
+        this.contacts = contacts;
+    }
+
+    public MessageChain getMessages() {
+        return messages;
+    }
+
+    public void setMessages(MessageChain messages) {
+        this.messages = messages;
     }
 
     @Override

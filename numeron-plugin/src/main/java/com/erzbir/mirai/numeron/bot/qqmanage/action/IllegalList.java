@@ -2,7 +2,6 @@ package com.erzbir.mirai.numeron.bot.qqmanage.action;
 
 
 import com.erzbir.mirai.numeron.utils.SqlUtil;
-import lombok.Getter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,7 +15,7 @@ import java.util.HashSet;
  * 违禁词
  * </p>
  */
-@Getter
+
 public class IllegalList {
     public final static IllegalList INSTANCE = new IllegalList();
     private final HashSet<String> illegal = new HashSet<>();
@@ -100,6 +99,10 @@ public class IllegalList {
             return "在黑名单中";
         }
         return "查无此人";
+    }
+
+    public HashSet<String> getIllegal() {
+        return illegal;
     }
 
     @Override

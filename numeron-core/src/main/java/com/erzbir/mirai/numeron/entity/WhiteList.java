@@ -1,7 +1,7 @@
 package com.erzbir.mirai.numeron.entity;
 
 import com.erzbir.mirai.numeron.utils.SqlUtil;
-import lombok.Getter;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalTime;
@@ -14,7 +14,6 @@ import java.util.HashSet;
  * 白名单
  * </p>
  */
-@Getter
 public class WhiteList {
     public final static WhiteList INSTANCE = new WhiteList();
     private final HashSet<Long> white = new HashSet<>();
@@ -101,6 +100,10 @@ public class WhiteList {
             return "在白名单中";
         }
         return "查无此人";
+    }
+
+    public HashSet<Long> getWhite() {
+        return white;
     }
 
     @Override

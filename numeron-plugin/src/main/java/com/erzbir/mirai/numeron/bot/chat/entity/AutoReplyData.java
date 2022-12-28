@@ -1,7 +1,6 @@
 package com.erzbir.mirai.numeron.bot.chat.entity;
 
 import com.erzbir.mirai.numeron.utils.SqlUtil;
-import lombok.Getter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +11,6 @@ import java.util.HashMap;
  * @author Erzbir
  * @Date: 2022/11/25 17:21
  */
-@Getter
 public class AutoReplyData {
     public static AutoReplyData INSTANCE = new AutoReplyData();
 
@@ -96,5 +94,9 @@ public class AutoReplyData {
         String sql = "SELECT * FROM CHAT WHERE KEY = '" + key + "'";
         ResultSet resultSet = SqlUtil.getResultSet(sql);
         return resultSet == null;
+    }
+
+    public HashMap<String, String> getData() {
+        return data;
     }
 }

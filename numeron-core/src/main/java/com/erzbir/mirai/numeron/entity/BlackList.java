@@ -1,9 +1,7 @@
 package com.erzbir.mirai.numeron.entity;
 
 
-
 import com.erzbir.mirai.numeron.utils.SqlUtil;
-import lombok.Getter;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +16,6 @@ import java.util.HashSet;
  * </p>
  */
 
-@Getter
 public class BlackList {
     public final static BlackList INSTANCE = new BlackList();
     private final HashSet<Long> black = new HashSet<>();
@@ -106,6 +103,9 @@ public class BlackList {
         return "查无此人";
     }
 
+    public HashSet<Long> getBlack() {
+        return black;
+    }
 
     @Override
     public String toString() {

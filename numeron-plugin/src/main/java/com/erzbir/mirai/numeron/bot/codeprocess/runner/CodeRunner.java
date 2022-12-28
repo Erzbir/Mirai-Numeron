@@ -1,5 +1,7 @@
 package com.erzbir.mirai.numeron.bot.codeprocess.runner;
 
+import com.erzbir.mirai.numeron.bot.codeprocess.runway.RunCode;
+
 /**
  * @author Erzbir
  * @Date: 2022/11/30 08:48
@@ -8,8 +10,18 @@ public class CodeRunner extends AbstractRunner {
     private static final Object key = new Object();
     private static volatile CodeRunner INSTANCE;
 
-    public CodeRunner() {
-        super();
+    private CodeRunner() {
+
+    }
+
+    @Override
+    public RunCode getRunCode() {
+        return runCode;
+    }
+
+    @Override
+    public void setRunCode(RunCode runCode) {
+        this.runCode = runCode;
     }
 
     public static CodeRunner getInstance() {
@@ -22,4 +34,6 @@ public class CodeRunner extends AbstractRunner {
         }
         return INSTANCE;
     }
+
+
 }
