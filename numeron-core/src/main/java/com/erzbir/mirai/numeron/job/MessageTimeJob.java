@@ -36,6 +36,10 @@ public class MessageTimeJob extends TimeTask implements IMessageJob, IContactJob
         return contacts;
     }
 
+    public void setContacts(Contact[] contacts) {
+        this.contacts = contacts;
+    }
+
     @Override
     public void send(MessageChain messages, Contact contact) {
         contact.sendMessage(messages);
@@ -59,10 +63,6 @@ public class MessageTimeJob extends TimeTask implements IMessageJob, IContactJob
     @Override
     public void setCron(String cron) {
         this.cron = cron;
-    }
-
-    public void setContacts(Contact[] contacts) {
-        this.contacts = contacts;
     }
 
     public MessageChain getMessages() {

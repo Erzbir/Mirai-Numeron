@@ -1,8 +1,6 @@
 package com.erzbir.mirai.numeron.utils;
 
 
-
-
 import com.erzbir.mirai.numeron.entity.SqlConnection;
 
 import java.sql.Connection;

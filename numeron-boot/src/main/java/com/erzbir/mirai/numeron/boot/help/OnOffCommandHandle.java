@@ -1,6 +1,5 @@
 package com.erzbir.mirai.numeron.boot.help;
 
-import com.erzbir.mirai.numeron.boot.configs.BotConfig;
 import com.erzbir.mirai.numeron.entity.NumeronBot;
 import com.erzbir.mirai.numeron.filter.permission.PermissionType;
 import com.erzbir.mirai.numeron.filter.rule.FilterRule;
@@ -37,7 +36,7 @@ public class OnOffCommandHandle implements PluginRegister {
     @Override
     public void register(Bot bot, EventChannel<BotEvent> channel) {
         bot.getEventChannel().subscribeAlways(MessageEvent.class, event -> {
-            if (event.getMessage().contentToString().equals("/launch") && BotConfig.isMaster(event.getSender().getId())) {
+            if (event.getMessage().contentToString().equals("/launch") && NumeronBot.INSTANCE.getMaster() == event.getSender().getId()) {
                 NumeronBot.INSTANCE.turnOn();
                 event.getSubject().sendMessage("已开机");
             }

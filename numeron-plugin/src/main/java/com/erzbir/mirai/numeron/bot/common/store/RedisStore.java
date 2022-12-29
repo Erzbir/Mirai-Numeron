@@ -15,12 +15,12 @@ import java.util.stream.Stream;
  */
 public final class RedisStore {
     private static final Object key = new Object();
+    private static volatile RedisStore INSTANCE;
+    private final Jedis client;
     private String host;
     private int port;
     private String user;
     private String password;
-    private static volatile RedisStore INSTANCE;
-    private final Jedis client;
 
     private RedisStore() {
         Properties properties = new Properties();

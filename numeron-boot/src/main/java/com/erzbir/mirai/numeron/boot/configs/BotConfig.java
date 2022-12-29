@@ -8,15 +8,11 @@ import com.erzbir.mirai.numeron.utils.MiraiLogUtil;
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.BotFactory;
 import net.mamoe.mirai.utils.BotConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.Scanner;
 
@@ -27,13 +23,12 @@ import java.util.Scanner;
  * 配置类, 机器人的配置
  * </p>
  */
-@Configuration
-@ComponentScan(basePackages = {"com.erzbir.mirai.numeron"})
 public class BotConfig {
+    public static final BotConfig INSTANCE = new BotConfig();
     private final String deviceInfo = "device.json";
-    private static final String MAIN_DIR = "erzbirnumeron/"; // 文件存储目录
-    private static Bot bot; // 唯一bot实例
-    private static Long master; // 主人
+    private final String MAIN_DIR = "erzbirnumeron/"; // 文件存储目录
+    private final Bot bot; // 唯一bot实例
+    private Long master; // 主人
     private Long account; // 帐号
     private String password; // 密码
     private BotConfiguration.HeartbeatStrategy heartbeatStrategy = BotConfiguration.HeartbeatStrategy.STAT_HB;
@@ -41,19 +36,31 @@ public class BotConfig {
 
     {
         init();
+        // bot目录
+        String workDir = MAIN_DIR + "bots/" + account;
+        File file = new File(workDir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        bot = BotFactory.INSTANCE.newBot(account, password, new BotConfiguration() {
+            {
+                setWorkingDir(new File(workDir)); // 工作目录
+                setHeartbeatStrategy(heartbeatStrategy); // 心跳策略
+                setProtocol(miraiProtocol); // 登陆协议
+                fileBasedDeviceInfo(deviceInfo); // 文件保存的名字
+            }
+        });
         MiraiLogUtil.info("开始载入数据库数据");
         MiraiLogUtil.info("启用群列表: " + GroupList.INSTANCE);
         MiraiLogUtil.info("黑名单列表: " + BlackList.INSTANCE);
         MiraiLogUtil.info("白名单列表: " + WhiteList.INSTANCE);
         MiraiLogUtil.info("载入数据成功\n");
+        NumeronBot.INSTANCE.setMaster(master);
+        NumeronBot.INSTANCE.setBot(bot);
     }
 
-    public static Bot getBot() {
+    public Bot getBot() {
         return bot;
-    }
-
-    public static boolean isMaster(Long id) {
-        return Objects.equals(id, master);
     }
 
     private void init() {
@@ -142,27 +149,6 @@ public class BotConfig {
                 }
             }
         }
-    }
-
-    @Bean
-    Bot bot() {
-        // bot目录
-        String workDir = MAIN_DIR + "bots/" + account;
-        File file = new File(workDir);
-        if (!file.exists()) {
-            file.mkdirs();
-        }
-        bot = BotFactory.INSTANCE.newBot(account, password, new BotConfiguration() {
-            {
-                setWorkingDir(new File(workDir)); // 工作目录
-                setHeartbeatStrategy(heartbeatStrategy); // 心跳策略
-                setProtocol(miraiProtocol); // 登陆协议
-                fileBasedDeviceInfo(deviceInfo); // 文件保存的名字
-            }
-        });
-        NumeronBot.INSTANCE.setMaster(master);
-        NumeronBot.INSTANCE.setBot(bot);
-        return bot;
     }
 
 }

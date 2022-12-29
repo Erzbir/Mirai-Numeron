@@ -14,16 +14,6 @@ public class CodeRunner extends AbstractRunner {
 
     }
 
-    @Override
-    public RunCode getRunCode() {
-        return runCode;
-    }
-
-    @Override
-    public void setRunCode(RunCode runCode) {
-        this.runCode = runCode;
-    }
-
     public static CodeRunner getInstance() {
         if (INSTANCE == null) {
             synchronized (key) {
@@ -33,6 +23,16 @@ public class CodeRunner extends AbstractRunner {
             }
         }
         return INSTANCE;
+    }
+
+    @Override
+    public RunCode getRunCode() {
+        return runCode;
+    }
+
+    @Override
+    public void setRunCode(RunCode runCode) {
+        this.runCode = runCode;
     }
 
 

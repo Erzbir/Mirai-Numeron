@@ -1,21 +1,14 @@
 package com.erzbir.mirai.numeron.boot.processor;
 
-
+import com.erzbir.mirai.numeron.boot.classloader.AppContext;
 import com.erzbir.mirai.numeron.handler.Command;
 import com.erzbir.mirai.numeron.handler.Plugin;
 import com.erzbir.mirai.numeron.listener.Listener;
 import com.erzbir.mirai.numeron.utils.MiraiLogUtil;
-import org.jetbrains.annotations.NotNull;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.stereotype.Component;
 
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -23,14 +16,13 @@ import java.util.Set;
  * @Date: 2022/12/1 20:34
  */
 @SuppressWarnings("unused")
-@Component
-public class CommandAnnotationProcessor implements ApplicationContextAware, ApplicationListener<ContextRefreshedEvent> {
+public class CommandAnnotationProcessor implements Processor {
     public final static HashMap<String, Set<String>> helpMap = new HashMap<>();
-    public static ApplicationContext context;
     public static StringBuilder stringBuilder = new StringBuilder();
 
     @Override
-    public void onApplicationEvent(@NotNull ContextRefreshedEvent event) {
+    public void onApplicationEvent() {
+        AppContext context = AppContext.INSTANT;
         MiraiLogUtil.verbose("开始生成命令帮助文档......");
         context.getBeansWithAnnotation(Listener.class).forEach((k, v) -> scanBeans(v));
         context.getBeansWithAnnotation(Plugin.class).forEach((k, v) -> scanBeans(v));
@@ -45,17 +37,17 @@ public class CommandAnnotationProcessor implements ApplicationContextAware, Appl
     private void scanBeans(Object bean) {
         String name = bean.getClass().getName();
         MiraiLogUtil.debug("扫瞄到 " + name);
-        List.of(bean.getClass().getDeclaredMethods()).forEach(method -> {
+        for (Method method : bean.getClass().getDeclaredMethods()) {
             Command command = method.getDeclaredAnnotation(Command.class);
-            if (command != null) {
-                Set<String> set = helpMap.computeIfAbsent(command.name(), k -> new HashSet<>());
-                set.add(command.dec() + "\n" + command.help() + "\n");
+            if (command == null) {
+                return;
             }
-        });
-    }
-
-    @Override
-    public void setApplicationContext(@NotNull ApplicationContext context) throws BeansException {
-        CommandAnnotationProcessor.context = context;
+            Set<String> set = helpMap.computeIfAbsent(command.name(), k -> new HashSet<>());
+            set.add(command.dec() + "\n" + command.help() + "\n");
+        }
     }
 }
+
+
+
+

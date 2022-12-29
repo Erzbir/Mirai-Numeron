@@ -15,9 +15,12 @@
 
 三个消息处理注解:
 
-- <code>[@Message](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/Message.java)</code> 可以标记在所有消息事件类型的处理方法上
-- <code>[@GroupMessage](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/GroupMessage.java)</code> 标记在群消息事件处理的方法上
-- <code>[@UserMessage](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/UserMessage.java)</code> 标记在联系人消息事件处理的方法上
+- <code>[@Message](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/Message.java)</code>
+  可以标记在所有消息事件类型的处理方法上
+- <code>[@GroupMessage](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/GroupMessage.java)</code>
+  标记在群消息事件处理的方法上
+- <code>[@UserMessage](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/UserMessage.java)</code>
+  标记在联系人消息事件处理的方法上
 
 可以用消息处理注解做到什么?
 
@@ -60,7 +63,10 @@ save()</code>方法
 比如在A方法上加上<code>[@GroupMessage](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/massage/GroupMessage.java)</code>
 注解表示在监听到一个<code>GroupMessageEvent</code>
 > 后调用此方法进行对应处理(
-`> 注意A方法所属的类必须加<code>[@Listener](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/Listener.java)</code>注解)
+`>
+>
+注意A方法所属的类必须加<code>[@Listener](numeron-core/src/main/java/com/erzbir/mirai/numeron/listener/Listener.java)</code>
+> 注解)
 
 例子:
 
@@ -136,8 +142,10 @@ public class Test {
 execute()</code>中反射调用, 并为此方法在mirai中注册一个监听</b>
 
 除了以上方式,
-也可以实现<code>[PluginRegister](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/PluginRegister.java)</code>接口,
-并在实现类上打上<code>[@Plugin](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/Plugin.java)</code>注解, 这时就可以自动执行事件过滤
+也可以实现<code>[PluginRegister](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/PluginRegister.java)</code>
+接口,
+并在实现类上打上<code>[@Plugin](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/Plugin.java)</code>注解,
+这时就可以自动执行事件过滤
 
 ### 生成指令表:
 
@@ -164,7 +172,8 @@ execute()</code>中反射调用, 并为此方法在mirai中注册一个监听</b
 
 2. <code>[PluginAnnotationProcessor](numeron-boot/src/main/java/com/erzbir/mirai/boot/processor/PluginAnnotationProcessor.java)</code>:
    如果你不喜欢用注解来实现的方式,
-   你可以通过实现<code>[PluginRegister](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/PluginRegister.java)</code>接口,
+   你可以通过实现<code>[PluginRegister](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/PluginRegister.java)</code>
+   接口,
    当你实现了<code>register()</code>方法后,
    这个类会先获取所有过滤器执行过滤方法,
    再扫瞄实现了<code>[PluginRegister](numeron-core/src/main/java/com/erzbir/mirai/numeron/plugins/PluginRegister.java)</code>
