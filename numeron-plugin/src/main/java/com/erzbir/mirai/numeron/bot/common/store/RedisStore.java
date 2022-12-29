@@ -4,10 +4,9 @@ import kotlin.jvm.functions.Function1;
 import org.jetbrains.annotations.NotNull;
 import redis.clients.jedis.Jedis;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -21,10 +20,23 @@ public final class RedisStore {
     private String user;
     private String password;
     private static volatile RedisStore INSTANCE;
-    private final Jedis client = new Jedis("localhost", 6379);
+    private final Jedis client;
 
     private RedisStore() {
-
+        Properties properties = new Properties();
+        try {
+            properties.load(new FileReader("numeron-plugin/configs/redisconfig.properties"));
+            host = properties.getProperty("host");
+            port = Integer.parseInt(properties.getProperty("port"));
+            user = properties.getProperty("user");
+            password = properties.getProperty("password");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        client = new Jedis(host, port);
+        if (user != null || password != null) {
+            client.auth(user, password);
+        }
     }
 
     public static RedisStore getInstance() {
